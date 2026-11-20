@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fascikel – pošta, ktorá myslí v prípadoch</title>
+<meta name="description" content="Fascikel je poštový klient pre Windows, ktorý triedi poštu do prípadov. Nástěnka, šifrované úložisko, offline fulltext, Gmail a Office 365. Slovensky, česky a anglicky." />
+<link rel="icon" href="icon.png" />
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --bg-soft: #101729;
+    --card: #141d33;
+    --line: #22304d;
+    --text: #e9eefb;
+    --muted: #96a3c2;
+    --accent: #6b8cff;
+    --accent-soft: #8fa8ff;
+    --gold: #ffd479;
+    --radius: 20px;
+    --max: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    background: radial-gradient(1200px 620px at 50% -10%, #16244a 0%, var(--bg) 58%) no-repeat, var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
+  a { color: inherit; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 22px; }
+  header { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+  .brand img { width: 36px; height: 36px; border-radius: 11px; }
+  nav { display: flex; gap: 22px; font-size: 0.92rem; color: var(--muted); }
+  nav a { text-decoration: none; }
+  nav a:hover { color: var(--text); }
+  .hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 44px; align-items: center; padding: 44px 0 24px; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.78rem; font-weight: 700;
+             letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-soft); }
+  .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-soft); }
+  h1 { font-size: clamp(2.1rem, 5vw, 3.3rem); line-height: 1.05; letter-spacing: -0.035em; margin: 14px 0 12px; }
+  h1 span { color: var(--accent-soft); }
+  .lede { color: var(--muted); font-size: 1.05rem; max-width: 48ch; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 14px;
+         text-decoration: none; font-weight: 700; font-size: 0.98rem; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent-soft), var(--accent)); color: #071022; }
+  .btn-ghost { border: 1px solid var(--line); color: var(--text); background: rgba(255,255,255,0.02); }
+  .btn svg { width: 18px; height: 18px; }
+  .meta { margin-top: 14px; font-size: 0.82rem; color: var(--muted); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+  .badge { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 0.74rem; }
+  /* board mock */
+  .board { position: relative; justify-self: center; width: 100%; max-width: 430px; }
+  .board::before { content: ""; position: absolute; inset: -30px; background: radial-gradient(circle at 50% 30%, rgba(107,140,255,0.22), transparent 65%); filter: blur(12px); z-index: 0; }
+  .window { position: relative; z-index: 1; border: 1px solid var(--line); background: linear-gradient(180deg, #111a2e, #0c1322);
+            border-radius: 18px; padding: 12px; box-shadow: 0 40px 90px -30px rgba(0,0,0,0.9); }
+  .winbar { display: flex; align-items: center; gap: 7px; margin-bottom: 12px; }
+  .winbar i { width: 9px; height: 9px; border-radius: 50%; background: #2a3a5e; }
+  .winbar span { margin-left: auto; font-size: 0.72rem; color: var(--muted); }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .col { background: #0e1626; border: 1px solid var(--line); border-radius: 12px; padding: 8px; min-height: 210px; }
+  .col h4 { margin: 0 0 8px; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+            display: flex; align-items: center; gap: 5px; font-weight: 700; }
+  .col h4 i { width: 6px; height: 6px; border-radius: 50%; }
+  .mini { background: var(--card); border: 1px solid var(--line); border-radius: 9px; padding: 7px; margin-bottom: 7px; }
+  .mini b { display: block; font-size: 0.7rem; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mini small { color: var(--muted); font-size: 0.62rem; }
+  .mini em { display: inline-block; font-style: normal; font-size: 0.58rem; color: var(--gold); margin-top: 4px; }
+  section { padding: 56px 0; }
+  h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); letter-spacing: -0.03em; margin: 0 0 8px; }
+  .sub { color: var(--muted); margin: 0 0 26px; max-width: 70ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .feature { border: 1px solid var(--line); background: var(--bg-soft); border-radius: var(--radius); padding: 20px; }
+  .feature .ic { width: 38px; height: 38px; border-radius: 12px; background: rgba(107,140,255,0.13); display: grid; place-items: center; margin-bottom: 12px; }
+  .feature .ic svg { width: 20px; height: 20px; stroke: var(--accent-soft); fill: none; stroke-width: 1.7; }
+  .feature h3 { margin: 0 0 4px; font-size: 1rem; }
+  .feature p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+  .langs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .langs span { border: 1px solid var(--line); padding: 5px 12px; border-radius: 999px; font-size: 0.8rem; color: var(--muted); }
+  .steps { display: grid; gap: 10px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line); background: var(--bg-soft); border-radius: 16px; padding: 16px; }
+  .step .n { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--accent-soft); color: #071022; font-weight: 800; display: grid; place-items: center; font-size: 0.82rem; }
+  .step p { margin: 2px 0 0; color: var(--muted); font-size: 0.88rem; }
+  .note { margin-top: 14px; border: 1px solid var(--line); border-left: 3px solid var(--gold); border-radius: 12px;
+          padding: 12px 16px; color: var(--muted); font-size: 0.86rem; background: rgba(255,212,121,0.05); }
+  footer { border-top: 1px solid var(--line); padding: 26px 0 40px; color: var(--muted); font-size: 0.84rem; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  footer a { color: var(--muted); }
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; padding-top: 18px; }
+    .board { order: -1; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><img src="icon.png" alt="" />Fascikel</div>
+    <nav>
+      <a href="#features">Funkcie</a>
+      <a href="#install">Inštalácia</a>
+      <a href="#security">Bezpečnosť</a>
+      <a href="https://github.com/fascikelapp/fascikelapp">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Windows 10/11 · beta · lokálne a šifrované</div>
+      <h1>Pošta, ktorá<br /><span>myslí v prípadoch.</span></h1>
+      <p class="lede">Fascikel netriedi poštu do zložiek, ale do prípadov. Nástěnka ukáže, čo horí, na čo čakáš ty a čo je len na vedomie — bez klikania cez stovky e-mailov.</p>
+      <div class="cta">
+        <a class="btn btn-primary" id="download" href="https://github.com/fascikelapp/fascikelapp/releases/latest">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          Stiahnuť pre Windows
+        </a>
+        <a class="btn btn-ghost" href="#features">Ako to funguje</a>
+      </div>
+      <div class="meta">
+        <span class="badge" id="version">najnovšia verzia</span>
+        <span class="badge" id="downloads" hidden>stiahnutí</span>
+        <span>Slovenčina · Čeština · English</span>
+      </div>
+    </div>
+
+    <div class="board" aria-hidden="true">
+      <div class="window">
+        <div class="winbar"><i></i><i></i><i></i><span>Fascikel · Nástěnka</span></div>
+        <div class="cols">
+          <div class="col">
+            <h4><i style="background:#f16060"></i>Hoří</h4>
+            <div class="mini"><b>Faktúra po splatnosti</b><small>dnes 9:12</small><em>termín 48 h</em></div>
+            <div class="mini"><b>URGENT: výpadok</b><small>dnes 8:03</small></div>
+          </div>
+          <div class="col">
+            <h4><i style="background:#6b8cff"></i>Čaká na teba</h4>
+            <div class="mini"><b>Cenová ponuka</b><small>včera 16:40</small></div>
+            <div class="mini"><b>Otázka k objednávke</b><small>včera 11:05</small></div>
+          </div>
+          <div class="col">
+            <h4><i style="background:#8d99b8"></i>Informácie</h4>
+            <div class="mini"><b>Newsletter</b><small>pondelok</small></div>
+            <div class="mini"><b>Potvrdenie objednávky</b><small>pondelok</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="features">
+    <h2>Menej triedenia, viac hotových vecí</h2>
+    <p class="sub">Nástěnka je postavená na tom, čo od pošty naozaj potrebuješ: vedieť, čo je urgentné, na čo sa čaká a čo môže počkať.</p>
+    <div class="grid">
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/></svg></div>
+        <h3>Nástěnka prípadov</h3>
+        <p>Hoří, Čaká na teba, Otázka, Čakáš na nich, Rieši sa a Informácie. Každý stĺpec má vysvetlenie s príkladom.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+        <h3>Šifrované úložisko</h3>
+        <p>Databáza aj fulltextový index sú šifrované. Kľúč sa odvodzuje z tvojho profilu, nie z cloudu.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg></div>
+        <h3>Offline fulltext</h3>
+        <p>Hľadanie v celej histórii bez internetu — vlastný index, nie dotazy na server.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg></div>
+        <h3>Gmail a Office 365</h3>
+        <p>Prihlásenie v prehliadači cez OAuth, bez app password. IMAP/SMTP a POP3 účty pridáš ručne.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z"/></svg></div>
+        <h3>Rýchlosť Rustu</h3>
+        <p>Logika v Ruste, tenká UI vrstva. Synchronizácia s IDLE a CONDSTORE, prvý sync beží na pozadí.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 10h10M4 15h7"/><path d="m17 14 3 3-3 3"/></svg></div>
+        <h3>Triedenie pošty</h3>
+        <p>Newsletter, oznámenie alebo spam — s vysvetlením, prečo. Pravidlá podľa adresy, domény či predmetu a osobná poistka.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg></div>
+        <h3>Koncepty a plánovanie</h3>
+        <p>Rozpísaný mail sa uloží ako koncept, odoslanie naplánuješ na konkrétny čas. Priložíš prílohy aj podpis.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></div>
+        <h3>Viac účtov naraz</h3>
+        <p>Pracovný aj osobný účet v jednom okne, s odznakom účtu na každej karte prípadu.</p>
+      </div>
+    </div>
+    <div class="langs"><span>Slovenčina</span><span>Čeština</span><span>English</span><span>Windows 10/11 · x64</span></div>
+  </section>
+
+  <section id="security">
+    <h2>Pošta zostáva u teba</h2>
+    <p class="sub">Fascikel nemá server, ktorý by videl tvoje správy. Synchronizuje priamo s poskytovateľom a všetko ukladá lokálne.</p>
+    <div class="grid">
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v6c0 4.5 3 7.7 7 9 4-1.3 7-4.5 7-9V6l-7-3Z"/></svg></div>
+        <h3>Šifrovaná databáza</h3>
+        <p>SQLCipher s kľúčmi odvodenými z tvojho profilu. Bez kľúča sa nedá otvoriť ani skopírovaný súbor.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div>
+        <h3>Bez telemetrie</h3>
+        <p>Žiadne analytické servery, žiadne reklamy. Jediné spojenia sú na tvojho poskytovateľa pošty.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 7h16v10H4z"/><path d="M8 7V5h8v2M4 11h16"/></svg></div>
+        <h3>Tokeny v systéme</h3>
+        <p>OAuth tokeny sú šifrované v systémovom úložišti, nikdy v logu ani v obyčajnom súbore.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2>Inštalácia za minútu</h2>
+    <p class="sub">Inštalátor je distribuovaný priamo z GitHubu. Aktuálna verzia: <b id="version2">najnovšia</b>.</p>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><b>Stiahni inštalátor</b><p>Klikni na „Stiahnuť pre Windows“ — stiahne sa najnovšia verzia pre x64.</p></div></div>
+      <div class="step"><div class="n">2</div><div><b>Potvrď inštaláciu</b><p>Build zatiaľ nie je podpísaný, takže SmartScreen môže ukázať „Neznámy vydavateľ“. Zvoľ „Viac informácií“ → „Predsa spustiť“.</p></div></div>
+      <div class="step"><div class="n">3</div><div><b>Pridaj účet</b><p>V appke zvoľ Přidat účet → Sign in with Microsoft alebo Google, prípadne vyplň IMAP/SMTP.</p></div></div>
+    </div>
+    <div class="note">Fascikel je v beta verzii. Ak niečo zlyhá, log nájdeš v <code>%APPDATA%\app.fascikel.desktop\logs\fascikel.log</code> — pošli mi posledných pár riadkov.</div>
+  </section>
+
+  <footer>
+    <span>© <span id="year">2026</span> Fascikel</span>
+    <span><a href="https://github.com/fascikelapp/fascikelapp">GitHub</a> · <a href="https://github.com/fascikelapp/fascikelapp/releases">Releases</a> · <a href="https://github.com/fascikelapp/fascikelapp/blob/main/README.md">O projekte</a></span>
+  </footer>
+</div>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var REPO = 'fascikelapp/fascikelapp';
+
+  fetch('https://api.github.com/repos/' + REPO + '/releases/latest', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (release) {
+      if (!release || !release.tag_name) return;
+      var version = String(release.tag_name).replace(/^v/, '');
+      document.getElementById('version').textContent = 'verzia ' + version;
+      document.getElementById('version2').textContent = version;
+      var exe = (release.assets || []).filter(function (asset) {
+        return /\.exe$/i.test(asset.name);
+      })[0];
+      if (exe) document.getElementById('download').href = exe.browser_download_url;
+      else document.getElementById('download').href = release.html_url;
+    })
+    .catch(function () {});
+
+  // Total downloads across all releases, cached for 10 minutes so the public
+  // GitHub API rate limit is never a problem.
+  function skPlural(n) {
+    var m = n % 100;
+    if (m === 1) return 'stiahnutie';
+    if (m >= 2 && m <= 4) return 'stiahnutia';
+    return 'stiahnutí';
+  }
+
+  function showDownloads(total) {
+    if (!total || total < 1) return;
+    var el = document.getElementById('downloads');
+    el.textContent = '⬇ ' + total.toLocaleString('sk-SK') + ' ' + skPlural(total);
+    el.hidden = false;
+  }
+
+  try {
+    var cached = JSON.parse(localStorage.getItem('fascikel_downloads') || 'null');
+    if (cached && Date.now() - cached.at < 600000) showDownloads(cached.total);
+  } catch (e) {}
+
+  fetch('https://api.github.com/repos/' + REPO + '/releases?per_page=100', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (releases) {
+      if (!Array.isArray(releases)) return;
+      var total = releases.reduce(function (sum, release) {
+        return sum + (release.assets || []).reduce(function (assetSum, asset) {
+          return assetSum + (asset.download_count || 0);
+        }, 0);
+      }, 0);
+      showDownloads(total);
+      try {
+        localStorage.setItem('fascikel_downloads', JSON.stringify({ total: total, at: Date.now() }));
+      } catch (e) {}
+    })
+    .catch(function () {});
+</script>
+</body>
+</html>
