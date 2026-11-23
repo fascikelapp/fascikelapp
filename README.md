@@ -6,7 +6,7 @@ lokálne, databáza aj fulltextový index sú šifrované.
 
 - Web: <https://fascikelapp.github.io/fascikelapp/>
 - Releases: <https://github.com/fascikelapp/fascikelapp/releases>
-- Aktuálna verzia: **0.3.1** (Windows 10/11, x64)
+- Aktuálna verzia: **0.6.7** (Windows 10/11, x64)
 
 ## Čo vie
 
