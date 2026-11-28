@@ -1,8 +1,8 @@
 {
-  "version": "0.11.5",
-  "url": "https://github.com/fascikelapp/fascikelapp/releases/download/v0.11.5/Fascikel-0.11.5-x64-setup.exe",
-  "sha256": "42ebf73cb0abfce9443bda0d46d9094351838b63fbb0f194c7c72b937a44fd2c",
-  "size": 9580422,
-  "publishedAt": "2026-11-28T17:49:30.264Z",
-  "notes": "Fascikel 0.11.5: preložená AI karta, reset lokálnych dát, bezpečnejšia obnova zálohy."
+  "version": "0.11.6",
+  "url": "https://github.com/fascikelapp/fascikelapp/releases/download/v0.11.6/Fascikel-0.11.6-x64-setup.exe",
+  "sha256": "ae085e42ae2a700a038ef2ae9423beb39a451bb0e0a215d5824a9a3e6375ddab",
+  "size": 9583998,
+  "publishedAt": "2026-11-28T19:05:52.749Z",
+  "notes": "Fascikel 0.11.6: akcie v nitiach, Nie je spam, oprava Outlook Outboxu a typografia nastavení."
 }
