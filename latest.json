@@ -1,8 +1,8 @@
 {
-  "version": "0.11.1",
-  "url": "https://github.com/fascikelapp/fascikelapp/releases/download/v0.11.1/Fascikel-0.11.1-x64-setup.exe",
-  "sha256": "9ac75bb01312aa597311fa7a1766170ffce99740d5a32ef8914202b5589c84bc",
-  "size": 9572846,
-  "publishedAt": "2026-11-28T11:12:53.258Z",
-  "notes": "Fascikel 0.11.1"
+  "version": "0.11.2",
+  "url": "https://github.com/fascikelapp/fascikelapp/releases/download/v0.11.2/Fascikel-0.11.2-x64-setup.exe",
+  "sha256": "d9ac51133c22b9a64b6c9ebd6fb45104149fb228a73d343e53aa38a61fc6fca8",
+  "size": 9572822,
+  "publishedAt": "2026-11-28T11:19:10.495Z",
+  "notes": "Fascikel 0.11.2"
 }
